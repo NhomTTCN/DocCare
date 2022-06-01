@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "90694246904",
+    "project_id": "doctor-6b81e",
+    "storage_bucket": "doctor-6b81e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:90694246904:android:05624781f034d9abba760d",
+        "android_client_info": {
+          "package_name": "com.example.doccare"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "90694246904-bl6cuo6jtduh9db182g6uuktn89vfncd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyArN8e2e33ByevRcvKRCytEM-aB3STZkm4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "90694246904-bl6cuo6jtduh9db182g6uuktn89vfncd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
