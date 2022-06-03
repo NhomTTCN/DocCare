@@ -52,6 +52,10 @@
         <entry key="..\:/Users/Admin/AndroidStudioProjects/docCare/app/src/main/res/layout/activity_signup.xml" value="0.22826086956521738" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/docCare/app/src/main/res/layout/activity_signup2.xml" value="0.22826086956521738" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/docCare/app/src/main/res/layout/activity_signup3.xml" value="0.22826086956521738" />
+        <entry key="app/src/main/res/layout/activity_chat.xml" value="0.3582427536231884" />
+        <entry key="app/src/main/res/layout/fragment_chat.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/item_messenger.xml" value="0.32563405797101447" />
+        <entry key="app/src/main/res/layout/item_my_message.xml" value="0.32563405797101447" />
       </map>
     </option>
   </component>

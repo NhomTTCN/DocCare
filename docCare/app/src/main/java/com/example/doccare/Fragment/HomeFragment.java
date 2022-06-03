@@ -49,7 +49,7 @@ public class HomeFragment extends Fragment {
         recyview_blog = view.findViewById(R.id.recyview_blogs);
         tv_name = view.findViewById(R.id.tv_welcome_name);
 
-        tv_name.setText("Hi, " + infoViewModel.getLoginResponse().getInfo().getName());
+        tv_name.setText("");
 
         //fake data
         bloglist.add(new Blog("aa","ada", new DoctorInfo(), true, "title...", "desc...", "avc", "bd", "a"));

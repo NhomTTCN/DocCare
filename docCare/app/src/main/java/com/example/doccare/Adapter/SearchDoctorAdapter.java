@@ -17,6 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.doccare.Activity.ChatActivity;
 import com.example.doccare.Activity.ReviewDoctorActivity;
 import com.example.doccare.Model.DoctorInfo;
 import com.example.doccare.R;
@@ -72,8 +73,19 @@ public class SearchDoctorAdapter extends RecyclerView.Adapter<SearchDoctorAdapte
             public void onClick(View view) {
                 Intent intent = new Intent(holder.container.getContext(), ReviewDoctorActivity.class);
                 intent.putExtra("id", listdoctors.get(position).getId());
+                Log.d("TESTID", listdoctors.get(position).getId());
                 intent.putExtra("name", listdoctors.get(position).getFullName());
                 intent.putExtra("hospital", listdoctors.get(position).getHospitalName());
+                holder.container.getContext().startActivity(intent);
+            }
+        });
+
+        holder.btn_chat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(holder.container.getContext(), ChatActivity.class);
+                intent.putExtra("id", listdoctors.get(position).getId());
+                intent.putExtra("name", listdoctors.get(position).getFullName());
                 holder.container.getContext().startActivity(intent);
             }
         });
@@ -91,6 +103,7 @@ public class SearchDoctorAdapter extends RecyclerView.Adapter<SearchDoctorAdapte
         LinearLayout ln_expanded;
         ConstraintLayout container;
         ImageView btn_rating;
+        ImageView btn_chat;
 
         public DoctorViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -104,6 +117,7 @@ public class SearchDoctorAdapter extends RecyclerView.Adapter<SearchDoctorAdapte
             ln_expanded = itemView.findViewById(R.id.ln_expanded);
             container = itemView.findViewById(R.id.doctor_container);
             btn_rating = itemView.findViewById(R.id.btn_rating);
+            btn_chat = itemView.findViewById(R.id.btn_chat);
         }
     }
 }

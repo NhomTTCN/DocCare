@@ -102,7 +102,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                 if(response.message().equals("OK")) {
                     LoginResponse loginResponse = response.body();
-                    Log.d("LOGIN", loginResponse.getAccessToken().toString());
+                    Log.d("LOGIN", loginResponse.getInfo().getId());
 
                     //set access_token
                     tokenViewModel.setAccesstoken(loginResponse.getAccessToken());
@@ -117,6 +117,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         finish();
                     } else {
                         Intent intent = new Intent(LoginActivity.this, DoctorMainActivity.class);
+                        infoViewModel.setLiveInfo(loginResponse);
                         startActivity(intent);
                         finish();
                     }

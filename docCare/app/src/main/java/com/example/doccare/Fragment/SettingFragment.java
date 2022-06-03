@@ -13,16 +13,19 @@ import android.widget.ImageButton;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.doccare.Activity.LoginActivity;
 import com.example.doccare.R;
+import com.example.doccare.ViewModel.InfoViewModel;
 
 public class SettingFragment extends Fragment {
+    InfoViewModel infoViewModel;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = LayoutInflater.from(getContext()).inflate(R.layout.fragment_setting, container, false);
-
+        infoViewModel = new ViewModelProvider(getActivity()).get(InfoViewModel.class);
         ImageButton btn_logout = view.findViewById(R.id.btn_log_out);
         btn_logout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -33,6 +36,7 @@ public class SettingFragment extends Fragment {
                 dialog.setPositiveButton("Đồng ý", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         Intent intent = new Intent(requireContext(), LoginActivity.class);
+                        infoViewModel.setLiveInfo(null);
                         getActivity().finish();
                         startActivity(intent);
                     }

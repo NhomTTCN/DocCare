@@ -14,6 +14,7 @@ import com.example.doccare.Fragment.ChatFragment;
 import com.example.doccare.Fragment.HomeFragment;
 import com.example.doccare.Fragment.ProfileFragment;
 import com.example.doccare.Fragment.SearchFragment;
+import com.example.doccare.Fragment.SettingFragment;
 import com.example.doccare.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -37,17 +38,19 @@ public class DoctorMainActivity extends AppCompatActivity {
             Fragment fragment1 = null;
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    fragment1 = new HomeFragment();
+                    fragment1 = new ChatFragment();
                     break;
                 case R.id.navigation_search:
                     fragment1 = new HomeFragment();
                     break;
                 case R.id.navigation_chat:
-                    fragment1 = new HomeFragment();
+                    fragment1 = new ChatFragment();
                     break;
                 case R.id.navigation_profile:
                     fragment1 = new DoctorProfileFragment();
                     break;
+                case R.id.navigation_setting:
+                    fragment1 = new SettingFragment();
             }
             loadFragment(fragment1);
             return false;
