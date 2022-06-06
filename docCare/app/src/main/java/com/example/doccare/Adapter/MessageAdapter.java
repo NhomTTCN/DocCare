@@ -14,6 +14,8 @@ import com.example.doccare.R;
 
 import org.w3c.dom.Text;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageViewHolder> {
@@ -92,6 +94,17 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
             super.bind(message);
             tv_mymessage.setText(message.getMessage());
             tv_time.setText(message.getTime());
+            tv_time.setVisibility(View.GONE);
+            tv_mymessage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(tv_time.getVisibility() == View.GONE){
+                        tv_time.setVisibility(View.VISIBLE);
+                    } else {
+                        tv_time.setVisibility(View.GONE);
+                    }
+                }
+            });
         }
     }
 
@@ -110,6 +123,17 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
             super.bind(message);
             tv_othermessage.setText(message.getMessage());
             tv_time.setText(message.getTime());
+            tv_time.setVisibility(View.GONE);
+            tv_othermessage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(tv_time.getVisibility() == View.GONE){
+                        tv_time.setVisibility(View.VISIBLE);
+                    } else {
+                        tv_time.setVisibility(View.GONE);
+                    }
+                }
+            });
         }
     }
 }

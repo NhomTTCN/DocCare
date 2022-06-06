@@ -102,8 +102,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                 if(response.message().equals("OK")) {
                     LoginResponse loginResponse = response.body();
-                    Log.d("LOGIN", loginResponse.getInfo().getId());
-
                     //set access_token
                     tokenViewModel.setAccesstoken(loginResponse.getAccessToken());
 

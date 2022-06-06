@@ -18,6 +18,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.doccare.Adapter.MessageAdapter;
+import com.example.doccare.DoctorSpace.DoctorMainActivity;
 import com.example.doccare.Fragment.HomeFragment;
 import com.example.doccare.Model.Message;
 import com.example.doccare.R;
@@ -120,6 +121,13 @@ public class ChatActivity extends AppCompatActivity {
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (infoViewModel.getLiveInfo().getValue().getRole().equals("USER")){
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(intent);
+                } else {
+                    Intent intent = new Intent(getApplicationContext(), DoctorMainActivity.class);
+                    startActivity(intent);
+                }
 
             }
         });
@@ -132,9 +140,9 @@ public class ChatActivity extends AppCompatActivity {
     private void sendMessage() {
         if (edt_message.getText().toString().isEmpty())
             return;
-        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         Date date = new Date();
-        String current_time = formatter.format(date.getTime()).toString();
+        String current_time = formatter.format(date.getTime());
 
         String username = "";
         String doctorname = "";
@@ -143,7 +151,7 @@ public class ChatActivity extends AppCompatActivity {
             username = infoViewModel.getLiveInfo().getValue().getInfo().getName();
             doctorname = name_chater;
         } else {
-            doctorname = infoViewModel.getLiveInfo().getValue().getInfo().getName();
+            doctorname = infoViewModel.getLiveInfo().getValue().getInfo().getDoctor_name();
             username = name_chater;
 
         }
@@ -179,7 +187,6 @@ public class ChatActivity extends AppCompatActivity {
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
-                        Log.d("send_success", "success");
                         edt_message.setText("");
                         getListMessage();
                     }
@@ -223,9 +230,6 @@ public class ChatActivity extends AppCompatActivity {
 
                     }
                 });
-
-
-
 
     }
 }

@@ -1,5 +1,6 @@
 package com.example.doccare.Fragment;
 
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -7,6 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
@@ -54,7 +58,6 @@ public class ChatFragment extends Fragment {
     }
 
     private void getListMessengers() {
-        Log.d("checkID", infoViewModel.getLiveInfo().getValue().getInfo().getId());
         FirebaseFirestore.getInstance()
                 .collection("listmessengers")
                 .document(infoViewModel.getLiveInfo().getValue().getInfo().getId())
@@ -68,7 +71,11 @@ public class ChatFragment extends Fragment {
                             List<Messenger> listMessgeners = new ArrayList<>();
                             for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
                                 Messenger messenger = documentSnapshot.toObject(Messenger.class);
-                                Log.d("mess", messenger.toString());
+                                if (infoViewModel.getLiveInfo().getValue().getRole().equals("USER")) {
+                                    messenger.setDoctor(false);
+                                } else {
+                                    messenger.setDoctor(true);
+                                }
                                 listMessgeners.add(messenger);
                                 listMessgeners.sort(Comparator.comparing(Messenger::getTime).reversed());
                             }

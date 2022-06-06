@@ -1,5 +1,7 @@
 package com.example.doccare.Model;
+
 import javax.annotation.Generated;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -24,6 +26,42 @@ public class Info {
     @SerializedName("name")
     @Expose
     private String name;
+
+    public Boolean getActivate() {
+        return isActivate;
+    }
+
+    public void setActivate(Boolean activate) {
+        isActivate = activate;
+    }
+
+    public String getDoctor_name() {
+        return doctor_name;
+    }
+
+    public void setDoctor_name(String doctor_name) {
+        this.doctor_name = doctor_name;
+    }
+
+    @SerializedName("full_name")
+    @Expose
+    private String doctor_name;
+
+    public Info(String id, Account account, String createdAt, String updatedAt, Boolean isActivate, String name, String doctor_name, String phone, String birthday, String gender, String career, String insurance) {
+        this.id = id;
+        this.account = account;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.isActivate = isActivate;
+        this.name = name;
+        this.doctor_name = doctor_name;
+        this.phone = phone;
+        this.birthday = birthday;
+        this.gender = gender;
+        this.career = career;
+        this.insurance = insurance;
+    }
+
     @SerializedName("phone")
     @Expose
     private String phone;

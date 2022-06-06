@@ -6,9 +6,44 @@ public class Messenger {
     String doctorname;
     String message;
     String time;
+    Boolean isDoctor;
 
+    public String getUsername() {
+        return username;
+    }
 
-    public Messenger(){}
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getDoctorname() {
+        return doctorname;
+    }
+
+    public void setDoctorname(String doctorname) {
+        this.doctorname = doctorname;
+    }
+
+    public Boolean getDoctor() {
+        return isDoctor;
+    }
+
+    public void setDoctor(Boolean doctor) {
+        isDoctor = doctor;
+    }
+
+    public Messenger(String idWith, String username, String doctorname, String message, String time, Boolean isDoctor) {
+        this.idWith = idWith;
+        this.username = username;
+        this.doctorname = doctorname;
+        this.message = message;
+        this.time = time;
+        this.isDoctor = isDoctor;
+    }
+
+    public Messenger() {
+    }
+
     public String getIdWith() {
         return idWith;
     }
@@ -56,7 +91,6 @@ public class Messenger {
         this.message = message;
         this.time = time;
     }
-
 
 
 }

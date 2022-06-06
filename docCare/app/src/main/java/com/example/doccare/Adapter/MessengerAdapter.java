@@ -42,15 +42,22 @@ public class MessengerAdapter extends RecyclerView.Adapter<MessengerAdapter.Mess
     @Override
     public void onBindViewHolder(@NonNull MessengerViewHolder holder, int position) {
         holder.tv_time.setText(listMessgers.get(position).getTime());
-        holder.tv_name.setText(listMessgers.get(position).getIdWith());
+        String toPerson = "";
+        if (listMessgers.get(position).getDoctor()) {
+            toPerson = listMessgers.get(position).getUser_name();
+        } else {
+            toPerson = listMessgers.get(position).getDoctorname();
+        }
+        holder.tv_name.setText(toPerson);
         holder.tv_last_message.setText(listMessgers.get(position).getMessage());
         int pos = position;
+        String finalToPerson = toPerson;
         holder.messenger.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(holder.messenger.getContext(), ChatActivity.class);
                 intent.putExtra("id", listMessgers.get(pos).getIdWith());
-                intent.putExtra("name", listMessgers.get(pos).getDoctor_name());
+                intent.putExtra("name", finalToPerson);
                 holder.messenger.getContext().startActivity(intent);
             }
         });
