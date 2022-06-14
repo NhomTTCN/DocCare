@@ -111,7 +111,7 @@ public class SignUp3Activity extends AppCompatActivity implements View.OnClickLi
         user.setInsurance(insurance1);
         user.setCreatedAt(account1.getCreatedAt());
         Log.d("CrateAt", account1.getCreatedAt());
-        user.setActivate(false);
+        user.setActivate(true);
         user.setName(edt_firstname.getText().toString()
                 + edt_lastname.getText().toString());
         user.setPhone(edt_phone.getText().toString());

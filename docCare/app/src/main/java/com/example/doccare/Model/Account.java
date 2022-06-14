@@ -14,7 +14,7 @@ public class Account implements Serializable {
     private String createdAt;
     @SerializedName("is_activate")
     @Expose
-    private Boolean isActivate;
+    private Boolean isActivate = true;
     @SerializedName("username")
     @Expose
     private String username;
@@ -40,7 +40,7 @@ public class Account implements Serializable {
     public Account(String lastLogin, String createdAt, Boolean isActivate, String username, String email, String password, String avatar, Boolean isActive, Object role) {
         this.lastLogin = lastLogin;
         this.createdAt = createdAt;
-        this.isActivate = isActivate;
+        this.isActivate = true;
         this.username = username;
         this.email = email;
         this.password = password;

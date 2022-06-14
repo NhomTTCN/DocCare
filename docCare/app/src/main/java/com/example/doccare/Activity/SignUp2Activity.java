@@ -90,15 +90,6 @@ public class SignUp2Activity extends AppCompatActivity implements View.OnClickLi
         insurance.setCreatedDate(tv_createddate.getText().toString());
 
 
-//        "created_at": "2022-10-7 2:2:2",
-//                "is_activate": false,
-//                "code": "321312",
-//                "name": "vaaawa",
-//                "expired_date": "2022-01-10",
-//                "created_date": "2022-02-10"
-
-
-
 
         Intent i_intent = new Intent(this, SignUp3Activity.class);
         i_intent.putExtra("account", account);
