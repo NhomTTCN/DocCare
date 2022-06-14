@@ -1,11 +1,16 @@
 package com.example.doccare.Fragment;
 
+import static androidx.core.content.ContextCompat.checkSelfPermission;
+
+import android.Manifest;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -20,9 +25,13 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.LongDef;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -87,7 +96,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         edt_career.setText(loginResponse.getInfo().getCareer());
         tv_birthday.setText(loginResponse.getInfo().getBirthday());
 
-        if(loginResponse.getInfo().getAccount().getAvatar()!=null) {
+        if (loginResponse.getInfo().getAccount().getAvatar() != null) {
             Glide.with(getContext())
                     .load(loginResponse.getInfo().getAccount().getAvatar())
                     .into(avatar);
@@ -258,8 +267,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     }
 
     private String getRealPathFromURI(Uri contentURI) {
-        String result=infoViewModel.getLoginResponse().getInfo().getAccount().getAvatar();
-        if(contentURI!=null) {
+        String result = infoViewModel.getLoginResponse().getInfo().getAccount().getAvatar();
+        if (contentURI != null) {
             Cursor cursor = getActivity().getContentResolver().query(contentURI, null, null, null, null);
             if (cursor == null) { // Source is Dropbox or other similar local file path
                 result = contentURI.getPath();
@@ -272,4 +281,40 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         }
         return result;
     }
+
+    public void checkPermission(String permission, int requestCode) {
+        if (ContextCompat.checkSelfPermission(getContext(), permission) == PackageManager.PERMISSION_DENIED) {
+            Log.d("??", "??");
+            ActivityCompat.requestPermissions(getActivity(), new String[]{permission}, requestCode);
+        } else {
+            Log.d("GRANTEd", "grand");
+            Toast.makeText(getContext(), "Permission already granted", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode,
+                permissions,
+                grantResults);
+
+        if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            Toast.makeText(getContext(), "Camera Permission Granted", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(getContext(), "Camera Permission Denied", Toast.LENGTH_SHORT).show();
+        }
+
+
+        if (grantResults.length > 0
+                && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            Toast.makeText(getContext(), "Storage Permission Granted", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(getContext(), "Storage Permission Denied", Toast.LENGTH_SHORT).show();
+        }
+
+    }
 }
+

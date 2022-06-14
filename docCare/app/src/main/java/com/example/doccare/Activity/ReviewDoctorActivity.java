@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -99,7 +100,6 @@ public class ReviewDoctorActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ReViewResponse> call, Throwable t) {
-
             }
         });
     }
@@ -122,12 +122,15 @@ public class ReviewDoctorActivity extends AppCompatActivity {
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 Log.d("review", response.message().toString() + response.raw().toString());
                 Log.d("review", call.toString());
+                if(response.code() == 400 ){
+                    Toast.makeText(getApplicationContext(), "Bạn đã đánh giá rồi. Đừng đánh giá nữa... ", Toast.LENGTH_SHORT).show();
+                }
                 showReview();
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Log.d("afailed", t.getMessage().toString());
+
             }
         });
         edt_review.setText("");
