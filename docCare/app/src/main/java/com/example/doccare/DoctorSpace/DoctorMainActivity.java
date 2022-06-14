@@ -1,5 +1,6 @@
 package com.example.doccare.DoctorSpace;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import android.view.MenuItem;
@@ -24,8 +25,8 @@ public class DoctorMainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.bottomnavigation);
+        setContentView(R.layout.activity_doctor_main);
+        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.bottomnavigation_doctor);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         loadFragment(new HomeFragment());
     }
@@ -33,24 +34,20 @@ public class DoctorMainActivity extends AppCompatActivity {
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
+        @SuppressLint("NonConstantResourceId")
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             Fragment fragment1 = null;
             switch (item.getItemId()) {
-                case R.id.navigation_home:
-                    fragment1 = new ChatFragment();
-                    break;
-                case R.id.navigation_search:
+                case R.id.navigation_home_doctor:
                     fragment1 = new HomeFragment();
                     break;
-                case R.id.navigation_chat:
+                case R.id.navigation_chat_doctor:
                     fragment1 = new ChatFragment();
                     break;
-                case R.id.navigation_profile:
-                    fragment1 = new DoctorProfileFragment();
-                    break;
-                case R.id.navigation_setting:
+                case R.id.navigation_setting_doctor:
                     fragment1 = new SettingFragment();
+                    break;
             }
             loadFragment(fragment1);
             return false;
@@ -59,7 +56,7 @@ public class DoctorMainActivity extends AppCompatActivity {
     private void loadFragment(Fragment fragment) {
         // load fragment
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_container, fragment);
+        transaction.replace(R.id.fragment_container_doctor, fragment);
         transaction.addToBackStack(null);
         transaction.commit();
     }

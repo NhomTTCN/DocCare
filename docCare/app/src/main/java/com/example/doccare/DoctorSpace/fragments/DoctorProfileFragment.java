@@ -18,4 +18,9 @@ public class DoctorProfileFragment extends Fragment {
         View view = LayoutInflater.from(getContext()).inflate(R.layout.fragment_doctorprofile, container, false);
         return view;
     }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+    }
 }
