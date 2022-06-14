@@ -5,7 +5,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -19,28 +18,28 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.doccare.Adapter.MessageAdapter;
 import com.example.doccare.DoctorSpace.DoctorMainActivity;
-import com.example.doccare.Fragment.HomeFragment;
 import com.example.doccare.Model.Message;
 import com.example.doccare.R;
 import com.example.doccare.ViewModel.InfoViewModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 
 public class ChatActivity extends AppCompatActivity {
     RecyclerView recyclerView;
@@ -52,6 +51,7 @@ public class ChatActivity extends AppCompatActivity {
     String name_chater;
     InfoViewModel infoViewModel;
     ImageButton btn_back;
+    CollectionReference docRef;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -67,6 +67,34 @@ public class ChatActivity extends AppCompatActivity {
 
         //fake data
         getListMessage();
+
+        docRef = FirebaseFirestore.getInstance().collection("listchats").document(infoViewModel.getLiveInfo().getValue().getInfo().getId())
+                .collection("with")
+                .document(id_chater).collection("messages");
+
+
+        docRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                Log.d("change", "change");
+                List<Message> listMessages = new ArrayList<>();
+                for (QueryDocumentSnapshot documentSnapshot : value) {
+                    Message message = documentSnapshot.toObject(Message.class);
+                    Log.d("mess", message.toString());
+                    if (message.getReceiver().equals(id_chater)) {
+                        message.setMe(true);
+                    } else {
+                        message.setMe(false);
+                    }
+                    listMessages.add(message);
+                    listMessages.sort(Comparator.comparing(Message::getTime));
+                }
+                Log.d("listmesages", String.valueOf(listMessages.size()));
+                messageAdapter = new MessageAdapter(listMessages, getApplicationContext());
+                recyclerView.setAdapter(messageAdapter);
+            }
+        });
     }
 
     private void getListMessage() {
@@ -121,7 +149,7 @@ public class ChatActivity extends AppCompatActivity {
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (infoViewModel.getLiveInfo().getValue().getRole().equals("USER")){
+                if (infoViewModel.getLiveInfo().getValue().getRole().equals("USER")) {
                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                     startActivity(intent);
                 } else {
@@ -131,8 +159,6 @@ public class ChatActivity extends AppCompatActivity {
 
             }
         });
-
-
 
 
     }
@@ -147,7 +173,7 @@ public class ChatActivity extends AppCompatActivity {
         String username = "";
         String doctorname = "";
 
-        if(infoViewModel.getLiveInfo().getValue().getRole().equals("USER")){
+        if (infoViewModel.getLiveInfo().getValue().getRole().equals("USER")) {
             username = infoViewModel.getLiveInfo().getValue().getInfo().getName();
             doctorname = name_chater;
         } else {
@@ -174,7 +200,6 @@ public class ChatActivity extends AppCompatActivity {
         message1.put("username", username);
         message1.put("idWith", infoViewModel.getLiveInfo().getValue().getInfo().getId());
         message1.put("doctorname", doctorname);
-
 
 
         FirebaseFirestore.getInstance()

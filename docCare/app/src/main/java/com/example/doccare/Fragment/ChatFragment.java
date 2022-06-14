@@ -25,7 +25,11 @@ import com.example.doccare.R;
 import com.example.doccare.ViewModel.InfoViewModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -53,6 +57,31 @@ public class ChatFragment extends Fragment {
         recy_messengers = view.findViewById(R.id.recy_messengers);
 
         getListMessengers();
+
+
+        CollectionReference docf = FirebaseFirestore.getInstance().collection("listmessengers")
+                .document(infoViewModel.getLiveInfo().getValue().getInfo().getId())
+                .collection("with");
+
+        docf.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                List<Messenger> listMessgeners = new ArrayList<>();
+                for (QueryDocumentSnapshot documentSnapshot : value) {
+                    Messenger messenger = documentSnapshot.toObject(Messenger.class);
+                    if (infoViewModel.getLiveInfo().getValue().getRole().equals("USER")) {
+                        messenger.setDoctor(false);
+                    } else {
+                        messenger.setDoctor(true);
+                    }
+                    listMessgeners.add(messenger);
+                    listMessgeners.sort(Comparator.comparing(Messenger::getTime).reversed());
+                }
+                messengerAdapter = new MessengerAdapter(getContext(), listMessgeners);
+                recy_messengers.setAdapter(messengerAdapter);
+            }
+        });
 
 
     }
