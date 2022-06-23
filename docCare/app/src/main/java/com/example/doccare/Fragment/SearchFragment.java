@@ -19,6 +19,7 @@ import com.example.doccare.Model.DoctorInfo;
 import com.example.doccare.Model.SearchDoctorResponse;
 import com.example.doccare.Network.ApiService;
 import com.example.doccare.R;
+import com.example.doccare.common.HideKeyBoard;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,6 +52,7 @@ public class SearchFragment extends Fragment {
         btn_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                new HideKeyBoard().hideKeyboard(getActivity());
                 search_doctor();
             }
         });

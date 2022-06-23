@@ -86,7 +86,14 @@ public interface ApiService {
     Call<ResponseBody> reviewDoctor(
             @Header("Authorization") String token,
             @Body ReviewDoctor reviewDoctor
-            );
+    );
+
+    @PUT("doctor/review/{review_id}")
+    Call<ResponseBody> editReviewDoctor(
+            @Header("Authorization") String token,
+            @Path("review_id") String review_id,
+            @Body ReviewDoctor reviewDoctor
+    );
 
     @GET("blog/")
     Call<BlogListResponse> getBlogList(

@@ -122,8 +122,20 @@ public class ReviewDoctorActivity extends AppCompatActivity {
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 Log.d("review", response.message().toString() + response.raw().toString());
                 Log.d("review", call.toString());
+                Log.d("ID", listReviews.get(0).getId());
                 if(response.code() == 400 ){
-                    Toast.makeText(getApplicationContext(), "Bạn đã đánh giá rồi. Đừng đánh giá nữa... ", Toast.LENGTH_SHORT).show();
+                    ApiService.apiService.editReviewDoctor(token, listReviews.get(0).getId(), reviewDoctor).enqueue(new Callback<ResponseBody>() {
+                        @Override
+                        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                            Log.d("editREVIEW", response.message());
+                            showReview();
+                        }
+
+                        @Override
+                        public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                        }
+                    });
                 }
                 showReview();
             }

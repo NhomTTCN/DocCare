@@ -19,6 +19,7 @@ import com.example.doccare.Network.ApiService;
 import com.example.doccare.R;
 import com.example.doccare.ViewModel.InfoViewModel;
 import com.example.doccare.ViewModel.TokenViewModel;
+import com.example.doccare.common.HideKeyBoard;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import retrofit2.Call;
@@ -45,6 +46,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         mapping();
         get_regis();
+
+        new HideKeyBoard().hideKeyboard(this);
 
     }
 
@@ -90,7 +93,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void login() {
-
 
         if(!checkblank())
             return;
